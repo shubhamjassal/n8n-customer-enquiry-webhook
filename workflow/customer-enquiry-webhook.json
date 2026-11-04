@@ -1,0 +1,328 @@
+{
+  "name": "Customer Enquiry Webhook",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "customer-enquiry",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "2339ea87-32bc-4f60-bae5-89b78f4933b7",
+      "name": "Webhook"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c896e2de-4b68-4756-9a03-5554e09901bb",
+              "name": "customer_name",
+              "value": "={{ $json.body.customer_name }}",
+              "type": "string"
+            },
+            {
+              "id": "71791242-e03f-4024-af46-169397d181a8",
+              "name": "email",
+              "value": "={{ $json.body.email }}",
+              "type": "string"
+            },
+            {
+              "id": "e5e17a04-3687-4639-a04a-c3d7c2bff76d",
+              "name": "message",
+              "value": "={{ $json.body.message }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        176,
+        0
+      ],
+      "id": "2a77f93b-0f91-4882-bae5-39cbdd166b28",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 4
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.message }}",
+                    "rightValue": "payment",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    },
+                    "id": "b68e00c2-64c6-4106-a286-1846f4dbc59e"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 4
+                },
+                "conditions": [
+                  {
+                    "id": "170e5bc9-83a9-49e7-8b41-0b48fcbe7b0d",
+                    "leftValue": "={{ $json.message }}",
+                    "rightValue": "order",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra"
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.5,
+      "position": [
+        400,
+        0
+      ],
+      "id": "91971b47-b73a-4e37-982b-f3a3361d8ff0",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9e811914-9f19-478f-9a7a-2ce1d426b011",
+              "name": "department",
+              "value": "Payment Support",
+              "type": "string"
+            },
+            {
+              "id": "0c3b3bc6-0311-4f13-898f-f1b896189f66",
+              "name": "handling_status",
+              "value": "urgent",
+              "type": "string"
+            },
+            {
+              "id": "fb62e5b5-6497-44e3-ab3d-f595ca6872fd",
+              "name": "response",
+              "value": "Your payment enquiry has been forwarded to our payment support team.",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        624,
+        -112
+      ],
+      "id": "42ec33d2-7c1d-44d1-a04a-4e17cbebd06e",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1d35e2dc-5174-451d-a6a6-1303e3ec6898",
+              "name": "department",
+              "value": "Order Support",
+              "type": "string"
+            },
+            {
+              "id": "700ac596-c67e-4e95-a6cf-fb5e69a1e3f6",
+              "name": "handling_status",
+              "value": "normal",
+              "type": "string"
+            },
+            {
+              "id": "ef0db784-2c59-4e68-be8d-13032f4038ae",
+              "name": "response",
+              "value": "Your order enquiry has been forwarded to our order support.",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        624,
+        0
+      ],
+      "id": "9907d269-3a6b-4b48-9fec-766035566c07",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cf3c65c1-56e9-4bcb-aa4c-4d618bec11ff",
+              "name": "department",
+              "value": "General Support",
+              "type": "string"
+            },
+            {
+              "id": "38d330c0-bd63-44af-800b-c84672b4d2d7",
+              "name": "handling_status",
+              "value": "pending",
+              "type": "string"
+            },
+            {
+              "id": "a813776f-2cdc-4766-aa71-43eea4c5816f",
+              "name": "response",
+              "value": "Your enquiry has been received and forwarded to our general support team.",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        624,
+        112
+      ],
+      "id": "60f80320-5563-4262-9acd-f062f243973c",
+      "name": "Edit Fields3"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        848,
+        -48
+      ],
+      "id": "50aa1868-4657-474f-a4ae-849147d9586a",
+      "name": "Respond to Webhook"
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields3": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "nodeGroups": []
+}
