@@ -12,6 +12,7 @@ A self-hosted n8n workflow that receives customer enquiries through an HTTP POST
    - Otherwise → General Support (fallback)
 4. The selected branch sets `department`, `handling_status`, and `response`.
 5. **Respond to Webhook** returns the processed JSON item.
+![Customer Enquiry Webhook Workflow](screenshots/workflow-overview.png)
 
 ## Example request
 
