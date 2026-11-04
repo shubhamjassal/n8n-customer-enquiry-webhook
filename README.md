@@ -74,7 +74,7 @@ n8n-customer-enquiry-webhook/
 ├── workflow/
 │   └── customer-enquiry-webhook.json
 └── screenshots/
-    └── (add workflow screenshots here)
+    └── workflow-overview.png
 ```
 
 ## Security and scope
